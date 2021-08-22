@@ -9,33 +9,27 @@ import UIKit
 
 class MyInfoViewController: UIViewController {
     
+    // UI
     @IBOutlet weak var tfName: UITextField!
     @IBOutlet weak var tfAge: UITextField!
     @IBOutlet weak var tfWeight: UITextField!
     @IBOutlet weak var switchPregnancy: UISwitch!
-
-    // 전역변수 선언
-    let myUserDefaults = UserDefaults.standard
-   // var user
+    @IBOutlet weak var btnCompletion: UIButton!
     
+    let myUserDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+        
+        // btnCompletion UI Setting
+        btnCompletion.layer.cornerRadius = 8
+       // btnCompletion.layer.borderColor = CGColor(red: 0.2196, green: 0.1098, blue: 0, alpha: 1) // c100
+       // btnCompletion.layer.borderWidth = 2.0
+ 
+    } // ---------- viewDidLoad
     
-    /*
-     let defaults = UserDefaults.standard
-     userInput = defaults.string(forKey: "userInput")!
-
-     */
-    
-    // 0,1 (int)
     
    override func viewWillAppear(_ animated: Bool) {
-    
-   // let userName = ""
-    
 
     if let userName:String = myUserDefaults.string(forKey: "userName") {
            let userAge:Int = myUserDefaults.integer(forKey: "userAge")
@@ -46,30 +40,41 @@ class MyInfoViewController: UIViewController {
             tfAge.text = String(userAge)
             tfWeight.text = String(userWeight)
             switchPregnancy.isOn = userPregnancy
+        
       }else{
 
         self.navigationItem.setHidesBackButton(true, animated: false)
 
       }
 
-   }
-    
-    // 넘버패드로 바꾸기
+   } // ---------- viewWillAppear
+
     
     @IBAction func btnRegister(_ sender: UIButton) {
+        
+//        var button_isActive: Bool = false
+//
+//        if button_isActive {
+//            UIView.animate(withDuration: 0.2) {
+//                sender.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//            }
+//        } else {
+//            UIView.animate(withDuration: 0.2) {
+//                sender.backgroundColor = UIColor(named: "c100")
+//            }
+//        }
+//        button_isActive = !button_isActive
+        
         
         guard let userName:String = tfName.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
             return
         }
-        
         guard let userAge:Int = Int(tfAge.text!)! as Int? else {
             return
         }
-        
         guard let userWeight : Int = Int(tfWeight.text!)! as Int? else {
             return
         }
-        
         guard let userPregnancy : Bool = switchPregnancy.isOn as Bool? else {
             return
         }
@@ -83,6 +88,19 @@ class MyInfoViewController: UIViewController {
         
     } // ---------- btnRegister
     
+    
+    func btnRegisterAction() {
+        
+        
+        
+        
+            
+    }
+    
+    
+//    func btnRegisterAction(<#parameters#>) -> <#return type#> {
+//        <#function body#>
+//    }
 
     /*
     // MARK: - Navigation

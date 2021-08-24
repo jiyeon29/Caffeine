@@ -24,7 +24,6 @@ class MyInfoViewController: UIViewController {
         // btnCompletion UI Setting
         btnCompletion.layer.cornerRadius = 8
         
-        // 입력수 제한 delegate 필요하고 함수 만들기
         tfName.delegate = self
         tfAge.delegate = self
         tfWeight.delegate = self
@@ -69,7 +68,7 @@ class MyInfoViewController: UIViewController {
             self.showToast(message: "이름을 입력해주세요!")
             return
         }
-        
+
         guard (tfAge.text != "" || tfAge.text?.isEmpty != true) else {
             tfAge.becomeFirstResponder()
             self.showToast(message: "나이를 입력해주세요!")
@@ -81,7 +80,6 @@ class MyInfoViewController: UIViewController {
             self.showToast(message: "체중을 입력해주세요!")
             return
         }
-        
         
         // Save
         myUserDefaults.set(userName, forKey: "userName")
@@ -103,8 +101,8 @@ class MyInfoViewController: UIViewController {
  
     // Toast Message Fuction
     func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: (self.view.frame.size.height/10)*2, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor(red: 0.4667, green: 0.3373, blue: 0.0784, alpha: 1.0) // c60
         toastLabel.textColor = UIColor.white
         toastLabel.font = font
         toastLabel.textAlignment = .center;
@@ -113,7 +111,7 @@ class MyInfoViewController: UIViewController {
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds = true
         self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 10.0, delay: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()

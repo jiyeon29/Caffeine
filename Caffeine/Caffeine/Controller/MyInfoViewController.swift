@@ -17,24 +17,27 @@ class MyInfoViewController: UIViewController {
     @IBOutlet weak var btnCompletion: UIButton!
     
     let myUserDefaults = UserDefaults.standard
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // btnCompletion UI Setting
         btnCompletion.layer.cornerRadius = 8
-       // btnCompletion.layer.borderColor = CGColor(red: 0.2196, green: 0.1098, blue: 0, alpha: 1) // c100
-       // btnCompletion.layer.borderWidth = 2.0
- 
+        
+        // 입력수 제한 delegate 필요하고 함수 만들기
+        tfName.delegate = self
+        tfAge.delegate = self
+        tfWeight.delegate = self
+
     } // ---------- viewDidLoad
     
     
    override func viewWillAppear(_ animated: Bool) {
 
-    if let userName:String = myUserDefaults.string(forKey: "userName") {
-           let userAge:Int = myUserDefaults.integer(forKey: "userAge")
-           let userWeight:Int = myUserDefaults.integer(forKey: "userWeight")
-           let userPregnancy:Bool = myUserDefaults.bool(forKey: "userPregnancy")
+    if let userName = myUserDefaults.string(forKey: "userName") {
+           let userAge = myUserDefaults.integer(forKey: "userAge")
+           let userWeight = myUserDefaults.integer(forKey: "userWeight")
+           let userPregnancy = myUserDefaults.bool(forKey: "userPregnancy")
 
             tfName.text = userName
             tfAge.text = String(userAge)
@@ -42,65 +45,81 @@ class MyInfoViewController: UIViewController {
             switchPregnancy.isOn = userPregnancy
         
       }else{
-
         self.navigationItem.setHidesBackButton(true, animated: false)
-
       }
 
    } // ---------- viewWillAppear
 
     
+    // btnAction Fuction
     @IBAction func btnRegister(_ sender: UIButton) {
         
-//        var button_isActive: Bool = false
-//
-//        if button_isActive {
-//            UIView.animate(withDuration: 0.2) {
-//                sender.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//            }
-//        } else {
-//            UIView.animate(withDuration: 0.2) {
-//                sender.backgroundColor = UIColor(named: "c100")
-//            }
-//        }
-//        button_isActive = !button_isActive
+        // Data Optional Remove
+        guard let userName = tfName.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            return
+        }
+        let userAge:Int? = Int(tfAge.text!)
+        let userWeight:Int? = Int(tfWeight.text!)
+        let userPregnancy:Bool = switchPregnancy.isOn
         
         
-        guard let userName:String = tfName.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+        // Empty Check
+        guard tfName.text != "" || tfName.text?.isEmpty != true else {
+            tfName.becomeFirstResponder()
+            self.showToast(message: "이름을 입력해주세요!")
             return
         }
-        guard let userAge:Int = Int(tfAge.text!)! as Int? else {
+        
+        guard (tfAge.text != "" || tfAge.text?.isEmpty != true) else {
+            tfAge.becomeFirstResponder()
+            self.showToast(message: "나이를 입력해주세요!")
             return
         }
-        guard let userWeight : Int = Int(tfWeight.text!)! as Int? else {
+        
+        guard (tfWeight.text != "" || tfWeight.text?.isEmpty != true) else {
+            tfWeight.becomeFirstResponder()
+            self.showToast(message: "체중을 입력해주세요!")
             return
         }
-        guard let userPregnancy : Bool = switchPregnancy.isOn as Bool? else {
-            return
-        }
-
+        
+        
+        // Save
         myUserDefaults.set(userName, forKey: "userName")
         myUserDefaults.set(userAge, forKey: "userAge")
         myUserDefaults.set(userWeight, forKey: "userWeight")
         myUserDefaults.set(userPregnancy, forKey: "userPregnancy")
 
-        self.navigationController?.popViewController(animated: true) // 현재 화면 사라짐
+        // Now Screen Disappear
+        self.navigationController?.popViewController(animated: true)
         
     } // ---------- btnRegister
     
     
-    func btnRegisterAction() {
-        
-        
-        
-        
-            
+    // Keyboard Disappear
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    } // --------touchesBegan
+    
+ 
+    // Toast Message Fuction
+    func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = font
+        toastLabel.textAlignment = .center;
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds = true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 10.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
     }
-    
-    
-//    func btnRegisterAction(<#parameters#>) -> <#return type#> {
-//        <#function body#>
-//    }
+
 
     /*
     // MARK: - Navigation
@@ -111,5 +130,35 @@ class MyInfoViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
 
 } // ---------- MyInfoViewController
+
+
+extension MyInfoViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        switch textField {
+        case tfName:
+            let currentText = textField.text ?? ""
+            guard let stringRange = Range(range, in: currentText) else { return false }
+            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+            return updatedText.count <= 10
+        case tfAge:
+            let currentText = textField.text ?? ""
+            guard let stringRange = Range(range, in: currentText) else { return false }
+            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+            return updatedText.count <= 3
+        case tfWeight:
+            let currentText = textField.text ?? ""
+            guard let stringRange = Range(range, in: currentText) else { return false }
+            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+            return updatedText.count <= 3
+        default:
+            return false
+        }
+        
+    }
+}
+    
+ 

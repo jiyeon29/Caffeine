@@ -69,9 +69,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="lblName" destination="fod-Mu-u0d" id="mXq-o1-km8"/>
-                        <segue destination="6ra-Bi-Otn" kind="show" identifier="sgMyinfo" id="MS9-9j-pii"/>
                         <segue destination="ZJa-K8-Nra" kind="show" identifier="sgCalendar" id="9eY-4i-AsY"/>
                         <segue destination="WNk-aL-B6l" kind="show" identifier="sgAdd" id="67Z-Dd-u81"/>
+                        <segue destination="6ra-Bi-Otn" kind="show" identifier="sgMyinfo" id="DFv-xO-tpN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -261,6 +261,8 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-gX-OdG">
                                 <rect key="frame" x="245" y="453" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" name="c60"/>
+                                <color key="thumbTintColor" name="c20"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="임산부" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UU6-oi-ZPS">
                                 <rect key="frame" x="59" y="451" width="98" height="37"/>
@@ -270,7 +272,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJc-aw-SWp">
-                                <rect key="frame" x="146" y="532" width="146" height="54"/>
+                                <rect key="frame" x="146" y="548" width="146" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="c60"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -286,9 +288,7 @@
                         <viewLayoutGuide key="safeArea" id="9cy-8K-S2g"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Info" id="9ib-Ix-u1x">
-                        <barButtonItem key="backBarButtonItem" title="back" id="pTP-Ba-xLk"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="My Info" id="M41-Vf-byv"/>
                     <connections>
                         <outlet property="btnCompletion" destination="MJc-aw-SWp" id="kMA-sj-dQa"/>
                         <outlet property="switchPregnancy" destination="AOp-gX-OdG" id="B4b-OP-ITv"/>
@@ -298,6 +298,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phe-yU-B7i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationItem title="My Info" id="9ib-Ix-u1x">
+                    <barButtonItem key="backBarButtonItem" title="back" id="pTP-Ba-xLk"/>
+                </navigationItem>
             </objects>
             <point key="canvasLocation" x="221.73913043478262" y="955.58035714285711"/>
         </scene>
@@ -475,6 +478,9 @@
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <namedColor name="c100">
             <color red="0.2199999988079071" green="0.10999999940395355" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="c20">
+            <color red="0.75294117647058822" green="0.59215686274509804" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="c60">
             <color red="0.46700000762939453" green="0.33700001239776611" blue="0.078000001609325409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
